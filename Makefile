@@ -1,5 +1,3 @@
-ERROR???$$OO
-
 ###############
 # C O N F I G #
 ###############
@@ -27,7 +25,7 @@ $(VM_NAME):
 	vboxmanage modifyvm $@ --hostonlyadapter1 vboxnet0
 
 $(VM_STORAGE):
-	VBoxManage createhd --filename ~/goinfre/RS1.vdi --size 8000 --format VDI
+	VBoxManage createhd --filename $(VM_STORAGE) --size 8000 --format VDI
 
 $(VM_ISO):
 	ls $@
@@ -39,13 +37,13 @@ attachment: $(VM_NAME) $(VM_STORAGE) $(VM_ISO)
 
 .PHONY: info
 info:
-	VBoxManage showvminfo RS1
+	VBoxManage showvminfo $(VM_NAME)
 
 .PHONY: start
-start:
-	VBoxManage modifyvm RS1 --vrde on
-	VBoxManage modifyvm RS1 --vrdemulticon on --vrdeport 3390
-	VBoxManage --startvm RS1
+start: hostonlyif attachment
+	VBoxManage modifyvm $(VM_NAME) --vrde on
+	VBoxManage modifyvm $(VM_NAME) --vrdemulticon on --vrdeport 3390
+	VBoxManage --startvm $(VM_NAME)
 
 .PHONY: stop
 stop:
@@ -53,9 +51,6 @@ stop:
 
 .PHONY: clean
 clean: stop
-	VBoxManage unregistervm $(VM_NAME) --delete
-	jfs detach disks
-	snd delete disk/ unregister
 
 .PHONY: hostonlyif
 hostonlyif:
@@ -63,4 +58,5 @@ hostonlyif:
 	vboxmanage hostonlyif ipconfig vboxnet0 --ip 192.168.56.1 --netmask 255.255.255.252
 
 .PHONY: fclean
-fclean: clean
+fclean: stop clean
+	VBoxManage unregistervm $(VM_NAME) --delete
