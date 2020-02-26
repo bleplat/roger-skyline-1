@@ -1,8 +1,13 @@
 ###############
 # C O N F I G #
 ###############
+VM_FOLDER = ~/projects/roger-skyline-1/try0/
 VM_NAME = RS1
-VM_STORAGE = ~/goinfre/RS1.vdi
+VM_CHECKSUM = sha1-disk-checksum
+
+VM_GOINFRE = /sgoinfre/goinfre/Perso/bleplat
+VM_STORAGE = $(VM_GOINFRE)/RS1.vdi
+
 VM_ISO = /tmp/debian.iso
 REMOTE_ISO = https://gemmei.ftp.acc.umu.se/debian-cd/current/i386/iso-cd/debian-10.3.0-i386-netinst.iso
 
@@ -13,8 +18,17 @@ REMOTE_ISO = https://gemmei.ftp.acc.umu.se/debian-cd/current/i386/iso-cd/debian-
 
 all: hostonlyif $(VM_NAME) $(VM_STORAGE) $(VM_ISO) attachment
 
+$(VM_CHECKSUM):
+	shasum $(VM_STORAGE) > $@
+	git add $@
+.PHONY: checksum
+checksum: $(VM_CHECKSUM)
+
+$(VM_GOINFRE):
+	mkdir -p $@
+
 $(VM_NAME):
-	VBoxManage createvm --name $@ --ostype Debian --basefolder . --register
+	VBoxManage createvm --name $@ --ostype Debian --register --basefolder $(VM_FOLDER)
 	VBoxManage modifyvm $@ --memory 2048
 	VBoxManage storagectl $@ --name 'SATA Controller' --add sata --controller IntelAhci
 	VBoxManage storagectl $@ --name 'IDE Controller' --add ide
@@ -24,7 +38,7 @@ $(VM_NAME):
 	vboxmanage modifyvm $@ --nic2 hostonly
 	vboxmanage modifyvm $@ --hostonlyadapter2 vboxnet0
 
-$(VM_STORAGE):
+$(VM_STORAGE): | $(VM_GOINFRE)
 	VBoxManage createhd --filename $(VM_STORAGE) --size 8000 --format VDI
 
 $(VM_ISO):
@@ -44,15 +58,18 @@ info:
 start: hostonlyif attachment
 	VBoxManage modifyvm $(VM_NAME) --vrde on
 	VBoxManage modifyvm $(VM_NAME) --vrdemulticon on --vrdeport 3390
-	VBoxManage --startvm $(VM_NAME)
+	VBoxManage startvm $(VM_NAME) --type headless
 
 .PHONY: stop
 stop:
 	VBoxManage controlvm $(VM_NAME) acpipowerbutton || true
 
+.PHONY: clean_iso
+clean_iso:
+	rm -f $(VM_ISO)
+
 .PHONY: clean
 clean: stop
-	rm -f $(VM_ISO)
 
 .PHONY: hostonlyif
 hostonlyif:
