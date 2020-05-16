@@ -40,7 +40,7 @@ iptables -A INPUT -p tcp -m tcp --tcp-flags RST RST -m limit --limit 2/second --
 iptables -t mangle -A PREROUTING -p tcp ! --syn -m conntract --ctstate NEW -j DROP
 iptables -t mangle -A PREROUTING -p tcp -m conntrackt --cstate NEW -m tcpmss ! -mss 536:65535 -j DROP
 # NEW TCP CONNECTION FLOOD
-iptables -A INPUT -p tcp -m conntrack --ctstate NEW -m limit --limit 60/s --limit-burst 20 -j ACCEPT 
+iptables -A INPUT -p tcp -m conntrack --ctstate NEW -m limit --limit 20/s --limit-burst 20 -j ACCEPT 
 iptables -A INPUT -p tcp -m conntrack --ctstate NEW -j DROP
 # UNLEGITIMATE TCP FLAGS (short list)
 iptables -t mangle -A PREROUTING -p tcp --tcp-flags ALL ALL -j DROP
