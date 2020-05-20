@@ -79,14 +79,18 @@ sudo systemctl restart sshd
 echo "connect with \`ssh -i ./user -p 8822 user@192.168.56.2\`"
 
 
-# Custop iptables
+# Custom iptables
 
 read -p "Press ENTER to setup firewall." garbage
 sudo cp setup_iptables.sh /opt/
 sudo chown root:root /opt/setup_iptables.sh
 sudo chmod 700 /opt/setup_iptables.sh
-sudo sh /opt/setup_iptables.sh
-sudo cp setup_iptables.conf /etc/init/
+if grep -q "^# SETUP IPTABLES$" "/etc/crontab"; then
+	echo auto update is already enabled
+else
+	sudo echo "# SETUP IPTABLES" >> /etc/crontab
+	sudo echo "@reboot      root  sh /opt/setup_iptables.sh" >> /etc/crontab
+fi
 
 
 # Auto update
