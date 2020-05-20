@@ -90,8 +90,8 @@ else
 	sudo chown root:root /opt/update.sh
 	sudo chmod 700 /opt/update.sh
 	sudo echo "# AUTO UPDATE" >> /etc/crontab
-	sudo echo "0 4   * * 1  root  /opt/update" >> /etc/crontab
-	sudo echo "@reboot      root  /opt/update" >> /etc/crontab
+	sudo echo "0 4   * * 1  root  sh /opt/update.sh" >> /etc/crontab
+	sudo echo "@reboot      root  sh /opt/update.sh" >> /etc/crontab
 	crontab -e
 fi
 
@@ -106,7 +106,7 @@ else
 	sudo chown root:root /opt/check_cron.sh
 	sudo chmod 700 /opt/check_cron.sh
 	sudo echo "# CRONTAB MONITORING" >> /etc/crontab
-	sudo echo "0 0   * * *  root  /opt/update" >> /etc/crontab
+	sudo echo "0 0   * * *  root  sh /opt/check_cron.sh" >> /etc/crontab
 	crontab -e
 fi
 
