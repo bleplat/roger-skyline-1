@@ -55,6 +55,7 @@ read -p "Press ENTER to install requiered packages."
 sudo apt --yes install git
 echo "Answer Local only and RS1:"
 sudo apt --yes install postfix
+sudo apt --yes install ssh
 
 
 # Override Network Interfaces
@@ -62,19 +63,21 @@ sudo apt --yes install postfix
 read -p "Press ENTER to install requiered network interfaces."
 sudo cp ./interfaces /etc/network/interfaces
 sudo systemctl restart networking
-
+sudo ifup enp0s3
+sudo ifup enp0s8
 
 # Setup SSH Port
 
 read -p "Press ENTER to authorize the demo public key."
 mkdir -p /home/user/.ssh/
-cat user.pub > /home/user/.ssh/authorized_keys
+cat user.pub >> /home/user/.ssh/authorized_keys
 
 read -p "Press ENTER to setup custom sshd config."
 sshd_config="/etc/ssh/sshd_config"
 #sshd_config=$(find / -name "sshd_config" 1>/dev/null)
 sudo cp ./sshd_config $sshd_config
-sudo systemctl restart sshd.service
+sudo systemctl restart sshd
+echo "connect with \`ssh -i ./user -p 8822 user@192.168.56.2\`"
 
 
 # Auto update
