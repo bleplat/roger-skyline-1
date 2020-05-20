@@ -37,6 +37,11 @@ read -p "This script requieres that you installed the machine the right way, pre
 # RUN INSIDE THE MACHINE #
 ##########################
 
+# cd
+# sudo apt update && sudo apt --yes install git
+# git clone https://github.com/bleplat/roger-skyline-1.git
+# cd roger-skyline-1
+# sudo sh in-vm-steps.sh
 
 # Update the machine
 
@@ -48,6 +53,7 @@ read -p "Press ENTER to update the machine."
 
 read -p "Press ENTER to install requiered packages."
 sudo apt --yes install git
+echo "Answer Local only and RS1:"
 sudo apt --yes install postfix
 
 
