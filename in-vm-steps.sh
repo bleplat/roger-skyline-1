@@ -109,6 +109,6 @@ fi
 if grep -q "^127.0.0.1.localhost localhost.localdomain RS1" "/etc/hosts"; then
 	echo "not touching /etc/hosts"
 else
-	sudo echo "127.0.0.1\tlocalhost localhost.localdomain RS1" >> /etc/hosts
+	sudo echo "127.0.0.1 localhost localhost.localdomain RS1" >> /etc/hosts
 fi
 
