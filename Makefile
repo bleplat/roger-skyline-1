@@ -4,6 +4,9 @@
 VM_FOLDER = ~/roger-skyline-1/
 VM_NAME = RS1
 VM_CHECKSUM = sha1-disk-checksum
+VM_SNAPSHOT = $(VM_NAME).snapshot
+VM_SNAPSHOT_FILE = ./$(VM_NAME)/Snapshots/$(VM_SNAPSHOT)
+
 
 VM_GOINFRE = ~/roger-skyline-1/goinfre
 VM_STORAGE = $(VM_GOINFRE)/RS1.vdi
@@ -13,17 +16,13 @@ REMOTE_ISO = https://gensho.ftp.acc.umu.se/debian-cd/current/i386/iso-cd/debian-
 
 NET_INTERFACE = wlp3s0
 
+
+
 #############
 # R U L E S #
 #############
 
 all: hostonlyif $(VM_NAME) $(VM_STORAGE) $(VM_ISO) attachment
-
-$(VM_CHECKSUM):
-	shasum $(VM_STORAGE) > $@
-	git add $@
-.PHONY: checksum
-checksum: $(VM_CHECKSUM)
 
 $(VM_GOINFRE):
 	mkdir -p $@
@@ -55,16 +54,6 @@ attachment: $(VM_NAME) $(VM_STORAGE) $(VM_ISO)
 info:
 	VBoxManage showvminfo $(VM_NAME)
 
-.PHONY: start
-start: hostonlyif attachment
-	VBoxManage modifyvm $(VM_NAME) --vrde on
-	VBoxManage modifyvm $(VM_NAME) --vrdemulticon on --vrdeport 3390
-	VBoxManage startvm $(VM_NAME) --type headless
-
-.PHONY: stop
-stop:
-	VBoxManage controlvm $(VM_NAME) acpipowerbutton || true
-
 .PHONY: clean_iso
 clean_iso:
 	rm -f $(VM_ISO)
@@ -83,3 +72,42 @@ fclean: stop clean
 
 .PHONY: re
 re: fclean all
+
+
+################
+# RUN AND TEST #
+################
+
+.PHONY: start
+start: hostonlyif attachment
+	VBoxManage modifyvm $(VM_NAME) --vrde on
+	VBoxManage modifyvm $(VM_NAME) --vrdemulticon on --vrdeport 3390
+	VBoxManage startvm $(VM_NAME) --type headless
+
+.PHONY: stop
+stop:
+	sh stop.sh $(VM_NAME) 4
+
+$(VM_CHECKSUM):
+	shasum $(VM_STORAGE) > $@
+	git add $@
+.PHONY: checksum
+checksum: $(VM_CHECKSUM)
+
+.PHONY: run_snapshot
+run_snapshot: snapshot
+	VBoxManage startvm $(VM_NAME) --type headless
+
+.PHONY: snapshot
+snapshot: $(VM_SNAPSHOT_FILE)
+$(VM_SNAPSHOT_FILE):
+	VBoxManage snapshot $(VM_NAME) take $(VM_SNAPSHOT)
+
+.PHONY: restore
+restore: stop
+	VBoxManage snapshot $(VM_NAME) restore $(VM_SNAPSHOT)
+	VBoxManage snapshot $(VM_NAME) delete $(VM_SNAPSHOT)
+
+.PHONY: add
+add: checksum
+	git add $(VM_CHECKSUM)
