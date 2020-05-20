@@ -82,12 +82,12 @@ echo "connect with \`ssh -i ./user -p 8822 user@192.168.56.2\`"
 # Auto update
 
 read -p "Press ENTER to setup auto update" garbage
+sudo cp update.sh /opt/
+sudo chown root:root /opt/update.sh
+sudo chmod 700 /opt/update.sh
 if grep -q "^# AUTO UPDATE$" "/etc/crontab"; then
 	echo auto update is already enabled
 else
-	sudo cp update.sh /opt/
-	sudo chown root:root /opt/update.sh
-	sudo chmod 700 /opt/update.sh
 	sudo echo "# AUTO UPDATE" >> /etc/crontab
 	sudo echo "0 4   * * 1  root  sh /opt/update.sh" >> /etc/crontab
 	sudo echo "@reboot      root  sh /opt/update.sh" >> /etc/crontab
@@ -97,12 +97,12 @@ fi
 # Monitor crontab edits
 
 read -p "Press ENTER to setup cron edits monitoring" garbage
+sudo cp check_crontab.sh /opt/
+sudo chown root:root /opt/check_crontab.sh
+sudo chmod 700 /opt/check_crontab.sh
 if grep -q "^# CRONTAB MONITORING$" "/etc/crontab"; then
 	echo crontab is already being monitored
 else
-	sudo cp check_crontab.sh /opt/
-	sudo chown root:root /opt/check_crontab.sh
-	sudo chmod 700 /opt/check_crontab.sh
 	sudo echo "# CRONTAB MONITORING" >> /etc/crontab
 	sudo echo "0 0   * * *  root  sh /opt/check_crontab.sh" >> /etc/crontab
 fi

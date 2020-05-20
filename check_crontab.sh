@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-chasum /etc/crontab >> crontab_shasum.new
+shasum < /etc/crontab >> crontab_shasum.new
 
 if cmp -s "crontab_shasum.old" "crontab_shasum.new"; then
 	echo "crontab didnt change" > /dev/null
