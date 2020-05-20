@@ -89,7 +89,7 @@ if grep -q "^# SETUP IPTABLES$" "/etc/crontab"; then
 	echo auto update is already enabled
 else
 	sudo echo "# SETUP IPTABLES" >> /etc/crontab
-	sudo echo "@reboot      root  sh /opt/setup_iptables.sh" >> /etc/crontab
+	sudo echo "@reboot      root  sh /opt/setup_iptables.sh > /dev/null 2>&1" >> /etc/crontab
 fi
 
 
