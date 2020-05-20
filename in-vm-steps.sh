@@ -100,11 +100,11 @@ read -p "Press ENTER to setup cron edits monitoring" garbage
 if grep -q "^# CRONTAB MONITORING$" "/etc/crontab"; then
 	echo crontab is already being monitored
 else
-	sudo cp check_cron.sh /opt/
-	sudo chown root:root /opt/check_cron.sh
-	sudo chmod 700 /opt/check_cron.sh
+	sudo cp check_crontab.sh /opt/
+	sudo chown root:root /opt/check_crontab.sh
+	sudo chmod 700 /opt/check_crontab.sh
 	sudo echo "# CRONTAB MONITORING" >> /etc/crontab
-	sudo echo "0 0   * * *  root  sh /opt/check_cron.sh" >> /etc/crontab
+	sudo echo "0 0   * * *  root  sh /opt/check_crontab.sh" >> /etc/crontab
 fi
 
 
