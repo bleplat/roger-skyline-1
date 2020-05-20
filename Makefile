@@ -88,6 +88,7 @@ start: hostonlyif attachment
 stop:
 	sh stop.sh $(VM_NAME) 4
 
+.PHONY: $(VM_CHECKSUM)
 $(VM_CHECKSUM):
 	shasum $(VM_STORAGE) > $@
 	git add $@
