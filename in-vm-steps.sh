@@ -53,7 +53,7 @@ read -p "Press ENTER to update the machine." garbage
 
 read -p "Press ENTER to install requiered packages." garbage
 sudo apt --yes install git
-sudo apt --yes install sendmail
+sudo apt --yes install sendmail mailutils
 sudo apt --yes install ssh
 
 
@@ -91,7 +91,6 @@ else
 	sudo echo "# AUTO UPDATE" >> /etc/crontab
 	sudo echo "0 4   * * 1  root  sh /opt/update.sh" >> /etc/crontab
 	sudo echo "@reboot      root  sh /opt/update.sh" >> /etc/crontab
-	crontab -e
 fi
 
 
@@ -106,7 +105,6 @@ else
 	sudo chmod 700 /opt/check_cron.sh
 	sudo echo "# CRONTAB MONITORING" >> /etc/crontab
 	sudo echo "0 0   * * *  root  sh /opt/check_cron.sh" >> /etc/crontab
-	crontab -e
 fi
 
 
