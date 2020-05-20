@@ -14,14 +14,15 @@ echo Setting up iptables: Accept loopback
 iptables -A INPUT -i lo -p all -j ACCEPT
 iptables -A OUTPUT -o lo -j ACCEPT
 
-echo Setting up iptables: Drop attacks
+echo Setting up iptables: Drop attacks (private ranges)
+echo Warning: For internal networks, remove lines about your ip
 # SPOOFING (private ranges)
 iptables -t mangle -A PREROUTING -s 10.0.0.0/8 ! -i lo -j DROP 
 iptables -t mangle -A PREROUTING -s 127.0.0.0/8 ! -i lo -j DROP
 iptables -t mangle -A PREROUTING -s 169.254.0.0/16 -j DROP
 iptables -t mangle -A PREROUTING -s 172.16.0.0/12 -j DROP
 iptables -t mangle -A PREROUTING -s 192.0.2.0/24 -j DROP
-iptables -t mangle -A PREROUTING -s 192.168.0.0/16 ! -i lo -j DROP
+#iptables -t mangle -A PREROUTING -s 192.168.0.0/16 ! -i lo -j DROP
 # SPOOFING (reserved ranges)
 iptables -t mangle -A PREROUTING -s 0.0.0.0/8 ! -i lo -j DROP
 iptables -t mangle -A PREROUTING -d 0.0.0.0/8 ! -i lo -j DROP
@@ -31,6 +32,8 @@ iptables -t mangle -A PREROUTING -s 240.0.0.0/5 -j DROP
 iptables -t mangle -A PREROUTING -d 240.0.0.0/5 -j DROP
 iptables -t mangle -A PREROUTING -d 239.255.255.0/24 -j DROP
 iptables -t mangle -A PREROUTING -d 255.255.255.255 -j DROP
+
+echo Setting up iptables: Drop attacks (other)
 # SMURF
 iptables -A INPUT -p icmp -m icmp --icmp-type address-mask-request -j DROP
 iptables -A INPUT -p icmp -m icmp --icmp-type timestamp-request -j DROP

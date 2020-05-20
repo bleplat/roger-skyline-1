@@ -12,7 +12,7 @@ read -p "This script requieres that you installed the machine the right way, pre
 # Locale: United States
 # Keymap: French
 
-# Primary net interface: enp0s3  
+# Primary net interface: enp0s3
 # Hostname: RS1
 # Domain:
 
@@ -82,7 +82,11 @@ echo "connect with \`ssh -i ./user -p 8822 user@192.168.56.2\`"
 # Custop iptables
 
 read -p "Press ENTER to setup firewall." garbage
-sudo sh setup_iptables.sh
+sudo cp setup_iptables.sh /opt/
+sudo chown root:root /opt/setup_iptables.sh
+sudo chmod 700 /opt/setup_iptables.sh
+sudo sh /opt/setup_iptables.sh
+sudo cp setup_iptables.conf /etc/init/
 
 
 # Auto update
