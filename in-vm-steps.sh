@@ -53,8 +53,7 @@ read -p "Press ENTER to update the machine." garbage
 
 read -p "Press ENTER to install requiered packages." garbage
 sudo apt --yes install git
-echo "Answer Local only and RS1:"
-sudo apt --yes install postfix
+sudo apt --yes install sendmail
 sudo apt --yes install ssh
 
 
