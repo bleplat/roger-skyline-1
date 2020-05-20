@@ -7,11 +7,30 @@ read -p "This script requieres that you installed the machine the right way, pre
 # MACHINE BEING INSTALLED #
 ###########################
 
+# Language: English
+# Country: France
+# Locale: United States
+# Keymap: French
 
-#
-#  
-#  
+# Primary net interface: enp0s3  
+# Hostname: RS1
+# Domain:
 
+# Root password:
+# New user name: user
+# User name: user
+# New user passwor: 1234abcdE
+
+# Partitioning method: manual
+# sda:
+#  create empty partition table: yes
+#  FREE SPACE -> 4.41 GB (4.2 Go) -> mount /
+#  FREE SPACE -> mount swap
+
+# Scan another CD: no
+# Debian archive mirror: deb.debian.org
+# only select standar utilities
+# Install grub: yes: sda
 
 
 ##########################
