@@ -79,6 +79,12 @@ sudo systemctl restart sshd
 echo "connect with \`ssh -i ./user -p 8822 user@192.168.56.2\`"
 
 
+# Custop iptables
+
+read -p "Press ENTER to setup firewall." garbage
+sudo sh setup_iptables.sh
+
+
 # Auto update
 
 read -p "Press ENTER to setup auto update" garbage
@@ -109,6 +115,9 @@ fi
 if grep -q "^127.0.0.1.localhost localhost.localdomain RS1" "/etc/hosts"; then
 	echo "not touching /etc/hosts"
 else
-	sudo echo "127.0.0.1 localhost localhost.localdomain RS1" >> /etc/hosts
+	sudo cp /etc/hosts ./hosts
+	sudo echo "127.0.0.1 localhost localhost.localdomain RS1" > /etc/hosts
+	sudo cat ./hosts >> /etc/hosts
+	sudo rm ./hosts
 fi
 

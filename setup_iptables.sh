@@ -37,8 +37,8 @@ iptables -A INPUT -p icmp -m icmp --icmp-type timestamp-request -j DROP
 iptables -A INPUT -p icmp -m limit --limit 1/second -j ACCEPT
 iptables -A INPUT -p tcp -m tcp --tcp-flags RST RST -m limit --limit 2/second --limit-burst 2 -j ACCEPT
 # SYN FLOOD (requiere SYN + disallow uncommon TCP MSS)
-iptables -t mangle -A PREROUTING -p tcp ! --syn -m conntract --ctstate NEW -j DROP
-iptables -t mangle -A PREROUTING -p tcp -m conntrackt --cstate NEW -m tcpmss ! -mss 536:65535 -j DROP
+iptables -t mangle -A PREROUTING -p tcp ! --syn -m conntrack --ctstate NEW -j DROP
+iptables -t mangle -A PREROUTING -p tcp -m conntrack --cstate NEW -m tcpmss ! -mss 536:65535 -j DROP
 # NEW TCP CONNECTION FLOOD
 iptables -A INPUT -p tcp -m conntrack --ctstate NEW -m limit --limit 20/s --limit-burst 20 -j ACCEPT 
 iptables -A INPUT -p tcp -m conntrack --ctstate NEW -j DROP
@@ -63,8 +63,10 @@ iptables -A INPUT -m recent --name portscan --rcheck --seconds 86400
 iptables -A FORWARD -m recent --name portscan --rcheck --seconds 86400
 iptables -A INPUT -m recent --name portscan --remove
 iptables -A FORWARD -m recent --name portscan --remove
-iptables -A INPUT -p all -m multiport --dports {21,22,23,25,139,443,7776,17776,27776} -m recent --name portscan --set -j LOG --log-prefix "PORTSCAN:"
-iptables -A FORWARD -p all -m multiport --dports {21,22,23,25,139,443,7776,17776,27776} -m recent --name portscan --set -j DROP
+iptables -A INPUT -p udp -m multiport --dports {21,22,23,25,139,443,7776,17776,27776} -m recent --name portscan --set -j LOG --log-prefix "PORTSCAN:"
+iptables -A INPUT -p tcp -m multiport --dports {21,22,23,25,139,443,7776,17776,27776} -m recent --name portscan --set -j LOG --log-prefix "PORTSCAN:"
+iptables -A FORWARD -p tcp -m multiport --dports {21,22,23,25,139,443,7776,17776,27776} -m recent --name portscan --set -j DROP
+iptables -A FORWARD -p udp -m multiport --dports {21,22,23,25,139,443,7776,17776,27776} -m recent --name portscan --set -j DROP
 
 # PrtTrap chain
 #iptables -N PortTrap
