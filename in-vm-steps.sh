@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # Prompt confirmation
-read -p "This script requieres that you installed the machine the right way, press ENTER if you did so, otherwise, read the comments in the script."
+read -p "This script requieres that you installed the machine the right way, press ENTER if you did so, otherwise, read the comments in the script." garbage
 
 ###########################
 # MACHINE BEING INSTALLED #
@@ -45,13 +45,13 @@ read -p "This script requieres that you installed the machine the right way, pre
 
 # Update the machine
 
-read -p "Press ENTER to update the machine."
+read -p "Press ENTER to update the machine." garbage
 ./update.sh
 
 
 # Install requiered packages
 
-read -p "Press ENTER to install requiered packages."
+read -p "Press ENTER to install requiered packages." garbage
 sudo apt --yes install git
 echo "Answer Local only and RS1:"
 sudo apt --yes install postfix
@@ -60,7 +60,7 @@ sudo apt --yes install ssh
 
 # Override Network Interfaces
 
-read -p "Press ENTER to install requiered network interfaces."
+read -p "Press ENTER to install requiered network interfaces." garbage
 sudo cp ./interfaces /etc/network/interfaces
 sudo systemctl restart networking
 sudo ifup enp0s3
@@ -68,11 +68,11 @@ sudo ifup enp0s8
 
 # Setup SSH Port
 
-read -p "Press ENTER to authorize the demo public key."
+read -p "Press ENTER to authorize the demo public key." garbage
 mkdir -p /home/user/.ssh/
 cat user.pub >> /home/user/.ssh/authorized_keys
 
-read -p "Press ENTER to setup custom sshd config."
+read -p "Press ENTER to setup custom sshd config." garbage
 sshd_config="/etc/ssh/sshd_config"
 #sshd_config=$(find / -name "sshd_config" 1>/dev/null)
 sudo cp ./sshd_config $sshd_config
@@ -82,7 +82,7 @@ echo "connect with \`ssh -i ./user -p 8822 user@192.168.56.2\`"
 
 # Auto update
 
-read -p "Press ENTER to setup auto update"
+read -p "Press ENTER to setup auto update" garbage
 if grep -q "^# AUTO UPDATE$" "/etc/crontab"; then
 	echo auto update is already enabled
 else
@@ -98,7 +98,7 @@ fi
 
 # Monitor crontab edits
 
-read -p "Press ENTER to setup cron edits monitoring"
+read -p "Press ENTER to setup cron edits monitoring" garbage
 if grep -q "^# CRONTAB MONITORING$" "/etc/crontab"; then
 	echo crontab is already being monitored
 else
