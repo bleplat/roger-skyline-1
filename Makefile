@@ -1,16 +1,17 @@
 ###############
 # C O N F I G #
 ###############
-VM_FOLDER = ~/projects/roger-skyline-1/try0/
+VM_FOLDER = ~/roger-skyline-1/
 VM_NAME = RS1
 VM_CHECKSUM = sha1-disk-checksum
 
-VM_GOINFRE = /sgoinfre/goinfre/Perso/bleplat
+VM_GOINFRE = ~/roger-skyline-1/goinfre
 VM_STORAGE = $(VM_GOINFRE)/RS1.vdi
 
 VM_ISO = /tmp/debian.iso
-REMOTE_ISO = https://gemmei.ftp.acc.umu.se/debian-cd/current/i386/iso-cd/debian-10.3.0-i386-netinst.iso
+REMOTE_ISO = https://gensho.ftp.acc.umu.se/debian-cd/current/i386/iso-cd/debian-10.4.0-i386-netinst.iso
 
+NET_INTERFACE = wlp3s0
 
 #############
 # R U L E S #
@@ -34,7 +35,7 @@ $(VM_NAME):
 	VBoxManage storagectl $@ --name 'IDE Controller' --add ide
 	VBoxManage modifyvm $@ --boot1 dvd --boot2 disk
 	vboxmanage modifyvm $@ --nic1 bridged
-	vboxmanage modifyvm $@ --bridgeadapter1 en0
+	vboxmanage modifyvm $@ --bridgeadapter1 $(NET_INTERFACE)
 	vboxmanage modifyvm $@ --nic2 hostonly
 	vboxmanage modifyvm $@ --hostonlyadapter2 vboxnet0
 
