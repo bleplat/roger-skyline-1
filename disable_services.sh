@@ -23,9 +23,9 @@ SERVICES=$(systemctl list-unit-files | grep enabled | sed "s/^\(.*\)enabled.*$/\
 
 echo "$SERVICES" | while IFS= read -r line ; do
 	if [[ $REQUIERED == *"$line"* ]]; then
-		echo "keeping $line enabled"
+		echo "keeping $line enabled" > /dev/null
 	else
-		echo "disabling $line"
+		echo "exterminating heretics $line"
 		sudo systemctl --now mask "$line"
 	fi
 done
