@@ -69,6 +69,7 @@ hostonlyif:
 .PHONY: fclean
 fclean: stop clean
 	VBoxManage unregistervm $(VM_NAME) --delete
+	rm -rf $(VM_NAME)
 
 .PHONY: re
 re: fclean all
