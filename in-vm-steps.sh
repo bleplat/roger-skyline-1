@@ -93,6 +93,21 @@ else
 fi
 
 
+# Fail to ban
+
+sudo apt --yes install fail2ban
+sudo cp jail.local /etc/fail2ban/jail.local
+sudo service fail2ban restart
+#sudo fail2ban-client status
+
+
+# Portsentry
+
+sudo apt --yes install portsentry
+sudo cp portsentry.conf /etc/portsentry/portsentry.conf
+sudo service portsentry restart
+
+
 # Auto update
 
 read -p "Press ENTER to setup auto update" garbage
@@ -128,4 +143,9 @@ else
 	sudo cat ./hosts >> /etc/hosts
 	sudo rm ./hosts
 fi
+
+
+# Disable services
+
+sudo sh disable_services.sh
 

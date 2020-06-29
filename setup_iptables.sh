@@ -90,7 +90,7 @@ iptables -t mangle -A PREROUTING -p icmp -j DROP
 
 
 echo Setting up iptables: Default policies
-
+iptables -A INPUT -j DROP
 iptables -P INPUT DROP
 iptables -P FORWARD ACCEPT
 iptables -P OUTPUT ACCEPT

@@ -1,0 +1,10 @@
+[sshd]
+
+enabled		= true
+port		= 8822
+maxretry	= 5
+findtime	= 120
+bantime		= 60
+
+[ssh-ddos]
+enabled		= true

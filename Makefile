@@ -1,14 +1,14 @@
 ###############
 # C O N F I G #
 ###############
-VM_FOLDER = ~/roger-skyline-1/
+VM_FOLDER = ~/projects/roger-skyline-1/
 VM_NAME = RS1
 VM_CHECKSUM = sha1-disk-checksum
 VM_SNAPSHOT = $(VM_NAME).snapshot
 VM_SNAPSHOT_FILE = ./$(VM_NAME)/Snapshots/$(VM_SNAPSHOT)
 
 
-VM_GOINFRE = ~/roger-skyline-1/goinfre
+VM_GOINFRE = ~/projects/roger-skyline-1/goinfre
 VM_STORAGE = $(VM_GOINFRE)/RS1.vdi
 
 VM_ISO = /tmp/debian.iso
