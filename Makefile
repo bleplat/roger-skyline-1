@@ -39,7 +39,7 @@ $(VM_NAME):
 	vboxmanage modifyvm $@ --hostonlyadapter2 vboxnet0
 
 $(VM_STORAGE): | $(VM_GOINFRE)
-	VBoxManage createhd --filename $(VM_STORAGE) --size 8000 --format VDI
+	VBoxManage createhd --filename $(VM_STORAGE) --size 8192 --format VDI
 
 $(VM_ISO):
 	curl $(REMOTE_ISO) > $(VM_ISO)
@@ -69,6 +69,7 @@ hostonlyif:
 .PHONY: fclean
 fclean: stop clean
 	VBoxManage unregistervm $(VM_NAME) --delete
+	rm $(VM_STORAGE)
 	rm -rf $(VM_NAME)
 
 .PHONY: re

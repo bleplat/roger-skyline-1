@@ -21,11 +21,12 @@ read -p "This script requieres that you installed the machine the right way, pre
 # User name: user
 # New user passwor: 1234abcdE
 
-# Partitioning method: manual
+# Partitioning method: Manual
 # sda:
 #  create empty partition table: yes
-#  FREE SPACE -> 4.41 GB (4.2 Go) -> mount /
-#  FREE SPACE -> mount swap
+#  FREE SPACE -> 4.501 GB (4.2 Go) -> mount /
+#  FREE SPACE -> 1 GB (I dont care) -> swap
+#  FREE SPACE -> mount /home
 
 # Scan another CD: no
 # Debian archive mirror: deb.debian.org
