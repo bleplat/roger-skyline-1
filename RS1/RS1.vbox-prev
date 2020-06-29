@@ -6,7 +6,7 @@
 ** Use VBoxManage or the VirtualBox Manager GUI to make changes.
 -->
 <VirtualBox xmlns="http://www.virtualbox.org/" version="1.16-linux">
-  <Machine uuid="{484fec60-69ef-4358-9710-b6940e0d82e2}" name="RS1" OSType="Debian" snapshotFolder="Snapshots" lastStateChange="2020-06-29T18:29:02Z">
+  <Machine uuid="{484fec60-69ef-4358-9710-b6940e0d82e2}" name="RS1" OSType="Debian" snapshotFolder="Snapshots" lastStateChange="2020-06-29T18:29:05Z">
     <MediaRegistry>
       <HardDisks>
         <HardDisk uuid="{006d4aa6-8e13-4aa4-9475-95698c33c91c}" location="/home/user/projects/roger-skyline-1/goinfre/RS1.vdi" format="VDI" type="Normal"/>
@@ -17,6 +17,7 @@
     </MediaRegistry>
     <ExtraData>
       <ExtraDataItem name="GUI/LastCloseAction" value="Detach"/>
+      <ExtraDataItem name="GUI/LastNormalWindowPosition" value="2160,603,800,650"/>
     </ExtraData>
     <Hardware>
       <CPU>
@@ -60,11 +61,12 @@
       <AudioAdapter driver="Pulse" enabled="true" enabledIn="false" enabledOut="false"/>
       <Clipboard/>
       <GuestProperties>
-        <GuestProperty name="/VirtualBox/HostInfo/GUI/LanguageID" value="en_US" timestamp="1593455345224000000" flags="RDONLYGUEST"/>
+        <GuestProperty name="/VirtualBox/HostInfo/GUI/LanguageID" value="en_US" timestamp="1593455345330364000" flags="RDONLYGUEST"/>
         <GuestProperty name="/VirtualBox/HostInfo/VBoxRev" value="137981" timestamp="1593450642628537002" flags="TRANSIENT, RDONLYGUEST"/>
         <GuestProperty name="/VirtualBox/HostInfo/VBoxVer" value="6.1.8" timestamp="1593450642628537000" flags="TRANSIENT, RDONLYGUEST"/>
         <GuestProperty name="/VirtualBox/HostInfo/VBoxVerExt" value="6.1.8" timestamp="1593450642628537001" flags="TRANSIENT, RDONLYGUEST"/>
         <GuestProperty name="/VirtualBox/VMInfo/ResetCounter" value="4" timestamp="1593455190265474000" flags="TRANSIENT, RDONLYGUEST"/>
+        <GuestProperty name="/VirtualBox/VMInfo/ResumeCounter" value="1" timestamp="1593455345256260000" flags="TRANSIENT, RDONLYGUEST"/>
       </GuestProperties>
     </Hardware>
     <StorageControllers>
