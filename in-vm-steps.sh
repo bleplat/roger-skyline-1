@@ -66,6 +66,7 @@ sudo systemctl restart networking
 sudo ifup enp0s3
 sudo ifup enp0s8
 
+
 # Setup SSH Port
 
 read -p "Press ENTER to authorize the demo public key." garbage
@@ -96,6 +97,7 @@ fi
 
 # Fail to ban
 
+read -p "Press ENTER to setup fail2ban." garbage
 sudo apt --yes install fail2ban
 sudo cp jail.local /etc/fail2ban/jail.local
 sudo service fail2ban restart
@@ -104,6 +106,7 @@ sudo service fail2ban restart
 
 # Portsentry
 
+read -p "Press ENTER to setup portsentry." garbage
 sudo apt --yes install portsentry
 sudo cp portsentry.conf /etc/portsentry/portsentry.conf
 sudo service portsentry restart

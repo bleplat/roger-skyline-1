@@ -1,6 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-SERVICES=$(systemctl list-unit-files | grep enabled | sed "s/^\(.*\)service//" | sed "s/[[:space:]]*$//")
+SERVICES=$(systemctl list-unit-files | grep enabled | sed "s/^\(.*\)enabled.*$/\1/" | sed "s/[[:space:]]*$//")
 REQUIERED="autovt@.service getty@.service networking.service ssh.service sshd.service syslog.service rsyslog.service cron.service fail2ban.service"
 
 echo "$SERVICES" | while IFS= read -r line ; do
